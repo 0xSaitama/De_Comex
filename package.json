@@ -1,0 +1,29 @@
+{
+  "name": "de_comex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.8.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "dotenv": "^16.3.1",
+    "ethers": "5.7.0",
+    "hardhat": "2.6.8"
+  },
+  "scripts": {
+    "build": "tsc",
+    "source": "node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  }
+}
