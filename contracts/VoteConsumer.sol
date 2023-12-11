@@ -5,6 +5,7 @@ import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0_
 import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0_0/libraries/FunctionsRequest.sol";
 
+
 /**
  * @title VoteConsumer
  * @notice Core contract making HTTP requests to Snapshot API using Chainlink
@@ -13,12 +14,21 @@ import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0
 contract VoteConsumer is FunctionsClient, ConfirmedOwner {
     using FunctionsRequest for FunctionsRequest.Request;
 
+    error WrongBatchHash(bytes32 requestId);
+    error TransactionFailed(address target, uint256 value, bytes data);
+
+    struct Transaction {
+        address target;
+        bytes data;
+        uint256 value;
+    }
+
     // State variables to store the last request ID, response, and error
     bytes32 public s_lastRequestId;
     bytes public s_lastResponse;
     bytes public s_lastError;
 
-    
+
 
     // Custom error type
     error UnexpectedRequestID(bytes32 requestId);
@@ -82,6 +92,23 @@ contract VoteConsumer is FunctionsClient, ConfirmedOwner {
         );
 
         return s_lastRequestId;
+    }
+
+    function executeTransactionBatch(bytes32 requestId, Transaction[] calldata transactions) external payable {
+        bytes32 batchHash = keccak256(abi.encode(transactions));
+        // Verify that the batch hash matches the one returned by the oracle
+        if(bytes32(requestIdToTxHash[requestId]) != batchHash) {
+            revert WrongBatchHash(requestId);
+        }
+        for (uint256 i = 0; i < transactions.length; i++) {
+            Transaction memory transaction = transactions[i];
+            (bool success, ) = transaction.target.call{value: transaction.value}(
+                transaction.data
+            );
+            if (!success) {
+                revert TransactionFailed(transaction.target, transaction.value, transaction.data);
+            }
+        }
     }
 
     /**
