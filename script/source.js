@@ -66,5 +66,9 @@ const txHash = body.split("`\\\\`");
 if (txHash.length !== scores.length + 1) {
   throw Error("wrong number of hash/choices");
 }
-
-return Functions.encodeString(txHash[highestIndex + 1]);
+const hexString = txHash[highestIndex + 1].slice(2)
+const bytes = new Uint8Array(hexString.length / 2);
+for (let i = 0; i < hexString.length; i += 2) {
+  bytes[i / 2] = parseInt(hexString.substring(i, i + 2), 16);
+}
+return bytes;

@@ -4,7 +4,7 @@ src = 'contracts'
 out = 'out'
 libs = ['lib']
 solc-version = "0.8.19"
-evm_version = 'london'
+evm_version = 'shangai'
 gas_reports = ['VoteConsumer']
 remappings = ['@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/',
 '@chainlink/contracts/=node_modules/@chainlink/contracts/',
@@ -40,7 +40,5 @@ multiline_func_header='attributes_first'
 # goerli = "${GOERLI_RPC_URL}"
 # mumbai = "${MUMBAI_RPC_URL}"
 
-[etherscan]
-goerli = { key = "${ETHERSCAN_API_KEY}" }
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config

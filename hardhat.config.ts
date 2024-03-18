@@ -52,7 +52,7 @@ const config: HardhatUserConfig = {
       // accounts: [LOCALHOST_PRIVATE_KEY],
     },
     sepolia: {
-      url: 'https://ethereum-sepolia.publicnode.com',
+      url: 'https://sepolia.infura.io/v3/3da10ed8e1234a27b05c734ce2dfe47e',
       accounts: [PRIVATE_KEY],
     },
     // rinkeby: {
