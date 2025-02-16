@@ -3,9 +3,9 @@
 src = 'contracts'
 out = 'out'
 libs = ['lib']
-solc-version = "0.8.19"
-evm_version = 'shangai'
-gas_reports = ['VoteConsumer']
+solc-version = "0.8.24"
+evm_version = 'shanghai'
+gas_reports = ['APIAccount']
 remappings = ['@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/',
 '@chainlink/contracts/=node_modules/@chainlink/contracts/',
 'forge-std/=lib/forge-std/src/',
